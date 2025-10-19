@@ -1,0 +1,22 @@
+{
+  "name": "assessment-task-aws",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.913.0",
+    "@aws-sdk/lib-dynamodb": "^3.913.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.8.1",
+    "@types/uuid": "^10.0.0",
+    "typescript": "^5.9.3"
+  }
+}
