@@ -3,7 +3,15 @@ import { client, TABLE_NAME, EMAIL_INDEX } from "./client";
 import { v4 as uuidv4 } from "uuid";
 import { decodeNextToken, encodeNextToken } from "../utils/pagination";
 
-export async function createUser({ name, email, status }: { name: string; email: string; status?: string }) {
+export async function createUser({
+  name,
+  email,
+  status,
+}: {
+  name: string;
+  email: string;
+  status?: string;
+}) {
   // Check unique email
   const existing = await client.send(
     new QueryCommand({
@@ -20,7 +28,7 @@ export async function createUser({ name, email, status }: { name: string; email:
   }
 
   const item = {
-    id: uuidv4(),
+    UserId: uuidv4(),
     name,
     email,
     status: status || "ACTIVE",
@@ -44,7 +52,8 @@ export async function getUsers(args: any) {
   };
 
   if (search) {
-    FilterExpression += "(contains(#name, :search) OR contains(#email, :search))";
+    FilterExpression +=
+      "(contains(#name, :search) OR contains(#email, :search))";
     ExpressionAttributeValues[":search"] = search;
   }
 
@@ -76,11 +85,11 @@ export async function getUsers(args: any) {
   const data = await client.send(new ScanCommand(params));
 
   const sortedItems = (data.Items || []).sort(
-    (a, b) => (b.createdAt > a.createdAt ? 1 : -1)
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
   return {
     items: sortedItems,
-    nextToken: encodeNextToken(data.LastEvaluatedKey),
+    nextToken: encodeNextToken(data.LastEvaluatedKey) || null,
   };
 }
