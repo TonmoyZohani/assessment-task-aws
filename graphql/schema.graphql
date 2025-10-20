@@ -1,0 +1,37 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  status: String!
+  createdAt: String!
+}
+
+type PaginatedUsers {
+  items: [User!]!
+  nextToken: String
+}
+
+type Query {
+  getUsers(
+    search: String
+    filter: UserFilter
+    dateFrom: String
+    dateTo: String
+    limit: Int
+    nextToken: String
+  ): PaginatedUsers
+}
+
+input UserFilter {
+  status: String
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  status: String
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User
+}
