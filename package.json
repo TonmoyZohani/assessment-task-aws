@@ -5,17 +5,16 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "package": "npm run build && powershell Compress-Archive -Path dist/*, node_modules -DestinationPath deployment-package.zip -Force"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.637.0",
     "@aws-sdk/lib-dynamodb": "^3.637.0",
-    "dotenv": "^17.2.3",
-    "uuid": "^9.0.1"
+    "dotenv": "^17.2.3"
   },
   "devDependencies": {
     "@types/node": "^24.8.1",
-    "@types/uuid": "^10.0.0",
     "typescript": "^5.6.3"
   }
 }
